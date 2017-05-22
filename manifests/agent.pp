@@ -23,6 +23,9 @@
 # [private_tmp_dir] Whether to configure this agent to use a private
 #   tmp directory, instead of the system tmp directory.
 #
+# [private_tmp_cleanup_age] Maximum age of files in tmp dir that should
+#   be cleaned up with tmpwatch. Eg. "10d", "1d", "4h"
+#
 # [refresh_service] Whether to restart the agent after a change to
 #   bamboo-capabilities.properties or wrapper.conf.
 #
@@ -55,6 +58,7 @@ define bamboo_agent::agent(
   $capabilities            = {},
   $expand_id_macros        = true,
   $private_tmp_dir         = false,
+  $private_tmp_cleanup_age = '10d',
   $refresh_service         = false,
   $description             = $title,
 ){
@@ -106,7 +110,10 @@ define bamboo_agent::agent(
       'set.TMP'                   => $agent_tmp,
       'wrapper.java.additional.3' => "-Djava.io.tmpdir=${agent_tmp}",
     }
-    bamboo_agent::private_tmp { $agent_tmp: require => $install }
+    bamboo_agent::private_tmp { $agent_tmp:
+      require => $install,
+      cleanup_age => $private_tmp_cleanup_age,
+    }
   }else{
     $tmp_dir_props = {}
   }

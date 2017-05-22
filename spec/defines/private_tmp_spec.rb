@@ -3,6 +3,7 @@ require 'spec_helper'
 describe 'bamboo_agent::private_tmp' do
 
   let :title do '/footmp' end
+  let :params do { 'cleanup_age' => '4d' } end
 
   let :pre_condition do <<PUPPET
 class bamboo_agent {
@@ -22,7 +23,7 @@ PUPPET
     })
     should contain_package('tmpwatch')
     should contain_cron('/footmp-tmp-cleanup').with({
-      :command => '/usr/sbin/tmpwatch 10d /footmp',
+      :command => '/usr/sbin/tmpwatch 4d /footmp',
       :minute  => 15,
     })
   end

@@ -2,7 +2,9 @@
 # *** This type should be considered private to this module ***
 define bamboo_agent::private_tmp(
   $path = $title,
+  $cleanup_age,
 ){
+  $escaped_age = shellquote($cleanup_age)
 
   file { $path:
     ensure => directory,
@@ -17,7 +19,7 @@ define bamboo_agent::private_tmp(
 
   cron { "${path}-tmp-cleanup":
     minute  => 15,
-    command => "/usr/sbin/tmpwatch 10d ${path}",
+    command => "/usr/sbin/tmpwatch ${escaped_age} ${path}",
     require => [Package['tmpwatch'],
                 File[$path]],
   }

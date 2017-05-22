@@ -94,11 +94,14 @@ PUPPET
     let :title do '1' end
     let :params do {
       :private_tmp_dir => true,
+      :private_tmp_cleanup_age => '12h',
     }
     end
 
     it do
-      should contain_bamboo_agent__private_tmp('/b/agent1-home/.agent_tmp')
+      should contain_bamboo_agent__private_tmp('/b/agent1-home/.agent_tmp').with({
+        :cleanup_age => '12h'
+      })
 
       should contain_bamboo_agent__wrapper_conf('1').with({
         # These cannot be tested until Rspec Puppet is updated to compare
