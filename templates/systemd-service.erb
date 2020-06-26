@@ -1,0 +1,13 @@
+[Unit]
+Description=Atlassian Bamboo Agent
+After=syslog.target network.target
+
+[Service]
+Type=forking
+User=bamboo
+LimitNOFILE=131072
+ExecStart=<%= @home %>/bin/bamboo-agent.sh start
+ExecStop=<%= @home %>/bin/bamboo-agent.sh stop
+
+[Install]
+WantedBy=multi-user.target

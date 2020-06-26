@@ -104,6 +104,20 @@ define bamboo_agent::agent(
     }
   }
 
+
+  # Bamboo agents now have a $home/temp/log_spool directory that
+  # fills everything up, so here's a quick hack to clean things
+  unless defined(Package['tmpwatch']){
+    package { 'tmpwatch': ensure => installed }
+  }
+  $agent_temp = "${home}/temp"
+  cron { "${agent_temp}-cleanup":
+    minute  => '*/15',
+    command => "/usr/sbin/tmpwatch 1h ${agent_temp}",
+    require => Package['tmpwatch'],
+  }
+
+
   if $private_tmp_dir {
     $agent_tmp    = "${home}/.agent_tmp"
     $tmp_dir_props = {
@@ -126,11 +140,14 @@ define bamboo_agent::agent(
     require    => $install,
   }
 
-  bamboo_agent::agent_cfg { $id:
-    home          => $home,
-    description   => $description,
-    before        => Bamboo_Agent::Service[$id],
-    require       => $install,
+  bamboo_agent::agent_cfg {
+    $id:
+      home        => $home,
+      agent_name  => "${hostname}-${id}",
+      description => $description,
+      require     => $install,
+      notify      => Bamboo_Agent::Service[$id],
+    ;
   }
 
   if $refresh_service {

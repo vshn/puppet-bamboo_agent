@@ -1,0 +1,36 @@
+{
+  "name": "kayak-bamboo_agent",
+  "version": "0.0.10",
+  "author": "kayak",
+  "summary": "Advanced management of Atlassian Bamboo agents.",
+  "license": "Apache-2.0",
+  "source": "git://github.com/kayak/puppet-bamboo_agent.git",
+  "project_page": "https://github.com/kayak/puppet-bamboo_agent",
+  "dependencies": [
+    { "name":"puppetlabs/stdlib","version_requirement":">= 4.25.1" },
+    { "name":"puppetlabs/java","version_requirement":">= 5.0.1" },
+    { "name":"kayak/r9util","version_requirement":">= 0.0.10" }
+  ],
+  "data_provider": "hiera",
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "7"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 5.0.0 < 6.0.0"
+    }
+  ],
+  "description": "Installation and fine-grained control of Bamboo agents on a node, including agent capabilities and properties in wrapper.conf."
+}

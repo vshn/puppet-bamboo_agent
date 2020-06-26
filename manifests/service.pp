@@ -11,12 +11,31 @@ define bamboo_agent::service(
   $script  = "${home}/bin/bamboo-agent.sh"
   $user    = $::bamboo_agent::user_name
 
-  file { "/etc/init.d/${service}":
+  if $facts['os']['release']['major'] == '7' {
+    $service_script  = "/etc/systemd/system/${service}.service"
+    $script_template = template('bamboo_agent/systemd-service.erb')
+    $mode = '0664'
+    file {
+      "/etc/systemd/system/${service}.d":
+        ensure => directory,
+      ;
+      "/etc/systemd/system/${service}.d/environment.conf":
+        ensure => file,
+        source => 'puppet:///modules/bamboo_agent/environment.conf',
+      ;
+    }
+  } else {
+    $service_script  = "/etc/init.d/${service}"
+    $script_template = template('bamboo_agent/init-script.erb')
+    $mode = '0755'
+  }
+
+  file { $service_script:
     ensure  => file,
     owner   => 'root',
     group   => 'root',
-    mode    => '0755',
-    content => template('bamboo_agent/init-script.erb'),
+    mode    => $mode,
+    content => $script_template,
   }
   ->
   service { $service:
