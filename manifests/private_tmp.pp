@@ -19,7 +19,7 @@ define bamboo_agent::private_tmp(
 
   cron { "${path}-tmp-cleanup":
     minute  => 15,
-    command => "/usr/sbin/tmpwatch ${escaped_age} ${path}",
+    command => "/usr/sbin/tmpreaper ${escaped_age} ${path}",
     require => [Package['tmpreaper'],
                 File[$path]],
   }

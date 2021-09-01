@@ -21,9 +21,9 @@ PUPPET
       :group  => 'jdoe',
       :mode   => '0755',
     })
-    should contain_package('tmpwatch')
+    should contain_package('tmpreaper')
     should contain_cron('/footmp-tmp-cleanup').with({
-      :command => '/usr/sbin/tmpwatch 4d /footmp',
+      :command => '/usr/sbin/tmpreaper 4d /footmp',
       :minute  => 15,
     })
   end
