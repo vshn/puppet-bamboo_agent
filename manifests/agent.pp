@@ -24,7 +24,7 @@
 #   tmp directory, instead of the system tmp directory. 
 #
 # [private_tmp_cleanup_age] Maximum age of files in tmp dir that should
-#   be cleaned up with tmpwatch. Eg. "10d", "1d", "4h"
+#   be cleaned up with tmpreaper. Eg. "10d", "1d", "4h"
 #
 # [refresh_service] Whether to restart the agent after a change to
 #   bamboo-capabilities.properties or wrapper.conf.
@@ -57,8 +57,8 @@ define bamboo_agent::agent(
   $manage_capabilities     = false,
   $capabilities            = {},
   $expand_id_macros        = true,
-#  $private_tmp_dir         = false,
-#  $private_tmp_cleanup_age = '10d',
+  $private_tmp_dir         = false,
+  $private_tmp_cleanup_age = '10d',
   $refresh_service         = false,
   $description             = $title,
 ){
@@ -107,14 +107,14 @@ define bamboo_agent::agent(
 
   # Bamboo agents now have a $home/temp/log_spool directory that
   # fills everything up, so here's a quick hack to clean things
-#  unless defined(Package['tmpwatch']){
-#    package { 'tmpwatch': ensure => installed }
+#  unless defined(Package['tmpreaper']){
+#    package { 'tmpreaper': ensure => installed }
 #  }
 #  $agent_temp = "${home}/temp"
 #  cron { "${agent_temp}-cleanup":
 #    minute  => '*/15',
-#    command => "/usr/sbin/tmpwatch 1h ${agent_temp}",
-#    require => Package['tmpwatch'],
+#    command => "/usr/sbin/tmpreaper 1h ${agent_temp}",
+#    require => Package['tmpreaper'],
 #  }
 
 
