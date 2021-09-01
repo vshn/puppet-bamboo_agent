@@ -21,7 +21,7 @@
 #   in the capabilities hash will be replaced with $id
 #
 # [private_tmp_dir] Whether to configure this agent to use a private
-#   tmp directory, instead of the system tmp directory.
+#   tmp directory, instead of the system tmp directory. 
 #
 # [private_tmp_cleanup_age] Maximum age of files in tmp dir that should
 #   be cleaned up with tmpwatch. Eg. "10d", "1d", "4h"
@@ -57,8 +57,8 @@ define bamboo_agent::agent(
   $manage_capabilities     = false,
   $capabilities            = {},
   $expand_id_macros        = true,
-  $private_tmp_dir         = false,
-  $private_tmp_cleanup_age = '10d',
+#  $private_tmp_dir         = false,
+#  $private_tmp_cleanup_age = '10d',
   $refresh_service         = false,
   $description             = $title,
 ){
@@ -107,30 +107,30 @@ define bamboo_agent::agent(
 
   # Bamboo agents now have a $home/temp/log_spool directory that
   # fills everything up, so here's a quick hack to clean things
-  unless defined(Package['tmpwatch']){
-    package { 'tmpwatch': ensure => installed }
-  }
-  $agent_temp = "${home}/temp"
-  cron { "${agent_temp}-cleanup":
-    minute  => '*/15',
-    command => "/usr/sbin/tmpwatch 1h ${agent_temp}",
-    require => Package['tmpwatch'],
-  }
+#  unless defined(Package['tmpwatch']){
+#    package { 'tmpwatch': ensure => installed }
+#  }
+#  $agent_temp = "${home}/temp"
+#  cron { "${agent_temp}-cleanup":
+#    minute  => '*/15',
+#    command => "/usr/sbin/tmpwatch 1h ${agent_temp}",
+#    require => Package['tmpwatch'],
+#  }
 
 
-  if $private_tmp_dir {
-    $agent_tmp    = "${home}/.agent_tmp"
-    $tmp_dir_props = {
-      'set.TMP'                   => $agent_tmp,
-      'wrapper.java.additional.3' => "-Djava.io.tmpdir=${agent_tmp}",
-    }
-    bamboo_agent::private_tmp { $agent_tmp:
-      require => $install,
-      cleanup_age => $private_tmp_cleanup_age,
-    }
-  }else{
-    $tmp_dir_props = {}
-  }
+ # if $private_tmp_dir {
+ #  $agent_tmp    = "${home}/.agent_tmp"
+ # $tmp_dir_props = {
+ #  'set.TMP'                   => $agent_tmp,
+ #     'wrapper.java.additional.3' => "-Djava.io.tmpdir=${agent_tmp}",
+ #   }
+ #  bamboo_agent::private_tmp { $agent_tmp:
+ #     require => $install,
+ #     cleanup_age => $private_tmp_cleanup_age,
+ #   }
+ # }else{
+ #   $tmp_dir_props = {}
+ # }
 
   bamboo_agent::wrapper_conf { $id:
     home       => $home,
