@@ -13,14 +13,14 @@ define bamboo_agent::private_tmp(
     mode   => '0755', # Only used by Bamboo user, no need for sticky
   }
 
-  unless defined(Package['tmpwatch']){
-    package { 'tmpwatch': ensure => installed }
-  }
+#  unless defined(Package['tmpwatch']){
+#    package { 'tmpwatch': ensure => installed }
+#  }
 
-  cron { "${path}-tmp-cleanup":
-    minute  => 15,
-    command => "/usr/sbin/tmpwatch ${escaped_age} ${path}",
-    require => [Package['tmpwatch'],
-                File[$path]],
-  }
+#  cron { "${path}-tmp-cleanup":
+#    minute  => 15,
+#    command => "/usr/sbin/tmpwatch ${escaped_age} ${path}",
+#    require => [Package['tmpwatch'],
+#                File[$path]],
+#  }
 }
