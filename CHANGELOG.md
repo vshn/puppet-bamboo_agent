@@ -1,4 +1,7 @@
 ** v0.0.2:
+- fixed: typo
+
+** v0.0.2:
 - added: parameter => build_directory to customize installation
 
 
