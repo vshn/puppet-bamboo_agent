@@ -51,16 +51,17 @@
 # "somehost-1".
 #
 define bamboo_agent::agent(
-  $id           = $title,
-  $home         = "${bamboo_agent::install_dir}/agent${title}-home",
-  $wrapper_conf_properties = {},
-  $manage_capabilities     = false,
+  $build_directory         = ''
   $capabilities            = {},
+  $description             = $title,
   $expand_id_macros        = true,
+  $home                    = "${bamboo_agent::install_dir}/agent${title}-home",
+  $id                      = $title,
+  $manage_capabilities     = false,
   $private_tmp_dir         = false,
   $private_tmp_cleanup_age = '10d',
   $refresh_service         = false,
-  $description             = $title,
+  $wrapper_conf_properties = {},
 ){
 
   validate_hash($wrapper_conf_properties)
@@ -140,14 +141,24 @@ define bamboo_agent::agent(
     require    => $install,
   }
 
-  bamboo_agent::agent_cfg {
-    $id:
-      home        => $home,
-      agent_name  => "${hostname}-${id}",
-      description => $description,
-      require     => $install,
-      notify      => Bamboo_Agent::Service[$id],
-    ;
+  if $build_directory == '' {
+    bamboo_agent::agent_cfg {
+      $id:
+        home        => $home,
+        agent_name  => "${hostname}-${id}",
+        description => $description,
+        require     => $install,
+        notify      => Bamboo_Agent::Service[$id],
+    }
+  } else {
+    bamboo_agent::agent_cfg {
+      $id:
+        home        => $build_directory,
+        agent_name  => "${hostname}-${id}",
+        description => $description,
+        require     => $install,
+        notify      => Bamboo_Agent::Service[$id],
+    }
   }
 
   if $refresh_service {

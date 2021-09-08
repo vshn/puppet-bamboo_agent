@@ -83,27 +83,28 @@
 # }
 #
 class bamboo_agent(
-  $server_url      = 'UNSET',
 
-  $agents         = [1],
-  $agent_defaults = {},
-  $install_dir    = '/usr/local/bamboo',
-
-  $user_name      = 'bamboo',
-  $manage_user    = true,
-  $user_options   = {
+  $agents          = [1],
+  $agent_defaults  = {},
+  $build_directory = ''
+  $default_capabilities = {},
+  $install_dir     = '/usr/local/bamboo',
+ 
+ 
+  $java_classname  = 'java',
+  $java_command    = 'java',
+ 
+  $manage_user     = true,
+ 
+  $user_name       = 'bamboo',
+  $user_options    = {
     'shell' => '/bin/bash',
   },
-
-  $java_classname = 'java',
-  $java_command   = 'java',
-
-  $default_capabilities = {},
-
   # Deprecated! Please use $server_url instead.
   $server          = 'UNSET',
   $server_port     = 8085,
   $server_protocol = 'http',
+  $server_url      = 'UNSET',
 ){
 
   $user_group = pick($user_options['group'],$user_name)
@@ -121,6 +122,15 @@ class bamboo_agent(
     owner  => $user_name,
     group  => $user_group,
     mode   => '0755',
+  }
+
+  if $build_directory != '' {
+    file { $build_directory:
+    ensure => directory,
+    owner  => $user_name,
+    group  => $user_group,
+    mode   => '0755',
+    }
   }
 
   if $server_url == 'UNSET' {
