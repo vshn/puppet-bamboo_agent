@@ -88,7 +88,7 @@ class bamboo_agent(
   $agent_defaults  = {},
   $build_directory = '',
   $default_capabilities = {},
-  $install_dir     = '/usr/local/bamboo',
+  $install_dir     = '/home/bamboo',
  
  
   $java_classname  = 'java',
