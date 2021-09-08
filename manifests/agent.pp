@@ -51,7 +51,7 @@
 # "somehost-1".
 #
 define bamboo_agent::agent(
-  $build_directory         = '',
+  $build_directory         = "${bamboo_agent::build_directory}",
   $capabilities            = {},
   $description             = $title,
   $expand_id_macros        = true,
