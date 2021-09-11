@@ -1,11 +1,11 @@
 # Set name and description within the bamboo agent configuration file.
 # *** This type should be considered private to this module ***
 define bamboo_agent::agent_cfg(
-  $home,
+  $home = "${bamboo_agent::install_dir}",
   $agent_name  = $title,
   $description = $description,
 ) {
-  $config_file = "${home}/bamboo-agent.cfg.xml"
+  $config_file = "${bamboo_agent::install_dir}/bamboo-agent.cfg.xml"
   file {
     $config_file:
       ensure  => file,

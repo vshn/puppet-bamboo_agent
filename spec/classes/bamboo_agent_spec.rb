@@ -15,7 +15,7 @@ describe 'bamboo_agent' do
 
     it do
       should contain_r9util__system_user('bamboo')
-      should contain_file('/usr/local/bamboo').with({
+      should contain_file('/home/bamboo').with({
         :ensure => 'directory',
         :mode   => '0755',
         :owner  => 'bamboo',
@@ -23,9 +23,9 @@ describe 'bamboo_agent' do
       })
       should contain_r9util__download('bamboo-agent-installer').with({
         :url => 'https://bamboo.com:8000/bamboo/agentServer/agentInstaller',
-        :path => '/usr/local/bamboo/bamboo-agent-installer.jar',
+        :path => '/home/bamboo/bamboo-agent-installer.jar',
       })
-      should contain_file('/usr/local/bamboo/bamboo-agent-installer.jar').with({
+      should contain_file('/home/bamboo/bamboo-agent-installer.jar').with({
         :mode => '0644',
         :owner => 'bamboo',
         :group => 'bamboo',
