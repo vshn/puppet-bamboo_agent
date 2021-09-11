@@ -144,20 +144,22 @@ define bamboo_agent::agent(
   if $build_directory == '' {
     bamboo_agent::agent_cfg {
       $id:
-        home        => $home,
-        agent_name  => "${hostname}-${id}",
-        description => $description,
-        require     => $install,
-        notify      => Bamboo_Agent::Service[$id],
+        home            => $home,
+        build_directory => $home,
+        agent_name      => "${hostname}-${id}",
+        description     => $description,
+        require         => $install,
+        notify          => Bamboo_Agent::Service[$id],
     }
   } else {
     bamboo_agent::agent_cfg {
       $id:
-        home        => $build_directory,
-        agent_name  => "${hostname}-${id}",
-        description => $description,
-        require     => $install,
-        notify      => Bamboo_Agent::Service[$id],
+        home            => $home,
+        build_directory => $build_directory,
+        agent_name      => "${hostname}-${id}",
+        description     => $description,
+        require         => $install,
+        notify          => Bamboo_Agent::Service[$id],
     }
   }
 
