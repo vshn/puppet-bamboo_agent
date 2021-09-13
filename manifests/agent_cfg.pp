@@ -21,7 +21,7 @@ define bamboo_agent::agent_cfg(
       lens    => 'Xml.lns',
       incl    => $config_file,
       changes => [
-        "set configuration/buildWorkingDirectory/#text ${home}/xml-data/build-dir",
+        "set configuration/buildWorkingDirectory/#text ${build_directory}/xml-data/build-dir",
         "set configuration/agentDefinition/name/#text ${agent_name}",
         "set configuration/agentDefinition/description/#text ${description}",
       ],

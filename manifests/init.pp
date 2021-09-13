@@ -86,7 +86,7 @@ class bamboo_agent(
 
   $agents          = [1],
   $agent_defaults  = {},
-  $build_directory = '',
+  $build_directory = undef,
   $default_capabilities = {},
   $install_dir     = '/home/bamboo',
  

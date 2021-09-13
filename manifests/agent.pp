@@ -141,11 +141,11 @@ define bamboo_agent::agent(
     require    => $install,
   }
 
-  if $build_directory == '' {
+  if $build_directory {
     bamboo_agent::agent_cfg {
       $id:
         home            => $home,
-        build_directory => $home,
+        build_directory => $build_directory,
         agent_name      => "${hostname}-${id}",
         description     => $description,
         require         => $install,
@@ -155,7 +155,7 @@ define bamboo_agent::agent(
     bamboo_agent::agent_cfg {
       $id:
         home            => $home,
-        build_directory => $build_directory,
+        build_directory => $home,
         agent_name      => "${hostname}-${id}",
         description     => $description,
         require         => $install,
