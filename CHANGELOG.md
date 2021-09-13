@@ -1,3 +1,10 @@
+** v0.0.5:
+- parametrizing service file
+
+** v0.0.4:
+- switching to systemd native
+- fixing problem with undef variable
+
 ** v0.0.3:
 - fixed: typo
 
