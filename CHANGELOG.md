@@ -1,3 +1,6 @@
+** v0.0.6:
+- fixing variable in service file template
+
 ** v0.0.5:
 - parametrizing service file
 
