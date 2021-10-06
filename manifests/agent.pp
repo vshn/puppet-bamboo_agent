@@ -67,9 +67,9 @@ define bamboo_agent::agent(
   validate_hash($wrapper_conf_properties)
   validate_hash($capabilities)
 
-  if $id !~ /\A[-\w]+\z/ {
-    fail("${id} is not a valid agent id")
-  }
+ # if $id !~ /\A[-\w]+\z/ {
+ #   fail("${id} is not a valid agent id")
+ # }
 
   file { $home:
     ensure => directory,
