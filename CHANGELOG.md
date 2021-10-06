@@ -1,3 +1,6 @@
+** v0.0.7:
+- deleting ID check
+
 ** v0.0.6:
 - fixing variable in service file template
 
