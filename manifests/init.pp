@@ -87,7 +87,9 @@ class bamboo_agent(
   $agents          = [1],
   $agent_defaults  = {},
   $build_directory = undef,
-  $default_capabilities = {},
+  $default_capabilities = {
+    'wrapper.java.additional.4' => '-Dlog4j2.formatMsgNoLookups=true',
+  },
   $install_dir     = '/home/bamboo',
  
  
