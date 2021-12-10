@@ -61,7 +61,9 @@ define bamboo_agent::agent(
   $private_tmp_dir         = false,
   $private_tmp_cleanup_age = '10d',
   $refresh_service         = false,
-  $wrapper_conf_properties = {},
+  $wrapper_conf_properties = {
+    'wrapper.java.additional.4' => '-Dlog4j2.formatMsgNoLookups=true',
+  },
 ){
 
   validate_hash($wrapper_conf_properties)
