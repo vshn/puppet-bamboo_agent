@@ -57,7 +57,7 @@ define bamboo_agent::agent(
   $expand_id_macros        = true,
   $home                    = "${bamboo_agent::install_dir}/agent${title}-home",
   $id                      = $title,
-  $manage_capabilities     = false,
+  $manage_capabilities     = true,
   $private_tmp_dir         = false,
   $private_tmp_cleanup_age = '10d',
   $refresh_service         = false,
